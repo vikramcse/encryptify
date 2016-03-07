@@ -1,30 +1,25 @@
-var readPass = require('./lib/read-password.js');
+var readPass = require('./lib/read-console.js');
 var encrypt = require('./lib/encrypt.js');
 var decrypt = require('./lib/decrypt.js');
 
-module.exports = function(fileName) {
-/* 
-		Decrypt function ->
-		- Read file
-		- encrypt file with given password
-		- save encrypted file to disk
-	*/
 
-	// callback for readPass
-	var encryptFile = function(password) {
-		//console.log(password);
-		encrypt('a.txt', password);
-	}
+var type = process.argv[2];
+var fileName = process.argv[3];
+var toFile = process.argv[4];
 
+// callback for readPass
+var encryptFile = function(password) {
+	encrypt(fileName, toFile, password);
+}
+
+var decryptFile = function(password) {
+	decrypt(fileName, toFile, password);
+}
+
+if (type === 'encrypt') {
 	readPass("password: ", encryptFile);
-
-	// decrypt content
-	// callback for readPass
-	var decryptFile = function(password) {
-		//console.log(password);
-		decrypt('a.txt.enc', password);
-	}
-
+} else if (type === 'decrypt') {
 	readPass("password: ", decryptFile);
-
-};
+} else {
+	console.log("Please read documentation");
+}
