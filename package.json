@@ -1,0 +1,24 @@
+{
+  "name": "encryptify",
+  "version": "1.0.0",
+  "description": "cli tool for encrypting and decrypting of files ",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikramcse/encryptify.git"
+  },
+  "keywords": ["encrypt", "decrypt", "file", "streams", "aes", "256", "password"],
+  "author": "Vikram Jadhav",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vikramcse/encryptify/issues"
+  },
+  "homepage": "https://github.com/vikramcse/encryptify#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  }
+}
