@@ -1,25 +1,29 @@
-var readPass = require('./lib/read-console.js');
+#!/usr/bin/env node
+'use strict';
+
 var encrypt = require('./lib/encrypt.js');
 var decrypt = require('./lib/decrypt.js');
+var program = require('commander');
+var co = require('co');
+var prompt = require('co-prompt');
 
 
-var type = process.argv[2];
-var fileName = process.argv[3];
-var toFile = process.argv[4];
-
-// callback for readPass
-var encryptFile = function(password) {
-	encrypt(fileName, toFile, password);
-}
-
-var decryptFile = function(password) {
-	decrypt(fileName, toFile, password);
-}
-
-if (type === 'encrypt') {
-	readPass("password: ", encryptFile);
-} else if (type === 'decrypt') {
-	readPass("password: ", decryptFile);
-} else {
-	console.log("Please read documentation");
-}
+program
+	.arguments('<source-file>')
+	.arguments('<dest-file>')
+	.option('-t, --type <type>', 'type of operation, encrypt or decrypt')
+	.action(function (source, dest) {
+		var type = program.type
+		var fileName = source
+		var toFile = dest
+		
+		co(function *() {
+			var password = yield prompt.password('password: ');
+			if (type === 'encrypt') {
+				encrypt(fileName, toFile, password);
+			} else if (type === 'decrypt') {
+				decrypt(fileName, toFile, password);
+			}
+		});
+	})
+	.parse(process.argv);
